@@ -7,7 +7,7 @@ set -x
 mkdir -p /var/run/netns
 
 BRIDGE_NAME=mpbr0
-BRIDGE_MAC=00:0a:bb:cc:dd:ee
+BRIDGE_MAC=00:0a:bb:cc:22:33
 
 # BRIDGE_IP=172.22.101.201/24
 # LEFT_IP=172.22.101.11/24
