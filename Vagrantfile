@@ -21,7 +21,6 @@ INSTALL_DOCKER
 Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", inline: $install_docker
-  config.vm.synced_folder "/Users/qian_lifu", "/lifuqian"
 
   config.vm.define "cattleh1" do |cattleh1|
     cattleh1.vm.hostname = 'cattleh1'
