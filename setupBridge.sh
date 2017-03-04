@@ -77,4 +77,22 @@ ip addr show
 
 
 
+ip link add name veth_fbri type veth peer name dbri
+ip link set dev veth_fbri master mpbr0
+ip link set dev veth_fbri up
+ip link set dev dbri master docker0
+ip link set dev dbri up
 
+ip addr add 172.22.101.4/24 dev veth_fbri
+
+sudo apt-get install ebtables
+ebtables -t nat -A POSTROUTING -p ARP -o eth1 --arp-ip-dst 172.17.0.0/16 -j DROP
+ebtables -t nat -A POSTROUTING -p ARP -o eth1 --arp-ip-dst 169.254.169.250 -j DROP
+
+
+
+#ebtables -t broute -A BROUTING -i veth_fbir -j DROP
+#ebtables -t broute -A BROUTING -i veth_fbir -p ipv4 --ip-source 169.254.169.250 -j ACCEPT
+#ebtables -t broute -A BROUTING -i veth_fbir -p arp --arp-opcode 2 --arp-ip-src 172.22.101.4 -j ACCEPT
+#ebtables -t  nat -A POSTROUTING -p ARP -o eth1 --arp-op Request --arp-ip-dst 172.22.101.4 -j DROP
+#ebtables -t  nat -A POSTROUTING -p ARP -o eth1 --arp-op Request --arp-ip-dst 169.254.169.250 -j DROP
